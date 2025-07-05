@@ -1,0 +1,116 @@
+smtp:
+  port: 25
+  timeout: 10
+  starttls: true
+
+dns:
+  timeout: 5
+  lifetime: 5
+  servers:
+    - 8.8.8.8
+    - 1.1.1.1
+
+performance:
+  max_concurrent: 30
+  request_jitter: 0.5
+
+security:
+  user_agent: 'Mozilla/5.0 (compatible; EmailVerifier/3.0)'
+  smtp_from: 'test@example.com'
+
+database:
+  reputation_db: 'domain_reputation.db'
+
+disposable_domains_sources:
+  - 'https://raw.githubusercontent.com/disposable-email-domains/disposable-email-domains/master/domains.txt'
+
+features:
+  smtp_check: true
+  detect_catch_all: false
+  check_reputation: true
+  suggest_corrections: true
+  detect_role_based: true
+
+api:
+  port: 8000
+  host: '0.0.0.0'
+  keys:
+    - 'test-key-123'
+
+proxy:
+  enabled: false
+  proxies: []
+
+export:
+  formats: ['csv', 'json']
+  include_metadata: true
+
+monitoring:
+  log_level: 'INFO'
+
+scoring:
+  weights:
+    syntax_valid: 20
+    domain_exists: 15
+    mx_records_exist: 15
+    multiple_mx_records: 5
+    not_disposable: 15
+    not_role_based: 10
+    smtp_valid: 20
+    good_reputation: 15
+
+cache:
+  type: 'memory'
+
+advanced:
+  enable_ipv6: true
+  idn_support: true
+
+smtp_strategies:
+  microsoft:
+    ports: [25, 587]
+    use_tls: false
+    timeout: 15
+    ehlo_hostname: 'mail.outlook.com'
+    mail_from: 'test@outlook.com'
+    special_handling: true
+  google:
+    ports: [25, 587]
+    use_tls: false
+    timeout: 10
+    ehlo_hostname: 'mail.gmail.com'
+    mail_from: 'test@gmail.com'
+    check_dnsbl: true
+  yahoo:
+    ports: [25]
+    use_tls: false
+    timeout: 10
+    ehlo_hostname: 'mail.yahoo.com'
+    mail_from: 'test@yahoo.com'
+  default:
+    ports: [25, 587, 465]
+    use_tls: false
+    timeout: 10
+    ehlo_hostname: 'mail.example.com'
+    mail_from: 'verify@example.com'
+
+webhooks:
+  timeout: 30
+  retry_count: 3
+  headers:
+    'X-Webhook-Source': 'EmailVerifier-v3'
+  hmac_secret: 'your-webhook-secret'
+
+reporting:
+  auto_generate: false
+  frequency: 'daily'
+  format: 'html'
+  recipients:
+    - 'admin@example.com'
+  include_charts: true
+
+sandbox:
+  enabled: false
+  simulate_results: false
+  success_rate: 80
+  simulated_delay: 100

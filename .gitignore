@@ -1,0 +1,10 @@
+venv/
+*.pyc
+__pycache__/
+logs/
+*.log
+.env
+config_prod.yaml
+results/*.csv
+results/*.json
+.DS_Store
